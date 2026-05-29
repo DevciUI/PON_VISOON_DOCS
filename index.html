@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P.O.N. Документы</title>
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="locked-by-gate">
+  <header class="system-bar">
+    <div class="system-left">
+      <span class="system-dot red"></span>
+      <span class="system-dot yellow"></span>
+      <span class="system-dot green"></span>
+      <strong>P.O.N. ДОКУМЕНТЫ</strong>
+      <span>рабочий стол</span>
+    </div>
+    <div class="system-right">
+      <button id="fullscreenToggle" class="fullscreen-toggle" type="button" title="Полный экран" aria-label="Полный экран">⛶</button>
+      <span id="accessState">доступ ограничен</span>
+      <time>25.05.2026</time>
+    </div>
+  </header>
+
+  <section class="access-lock" id="teamVacGate" aria-label="TeamVAC access code" role="dialog" aria-modal="true">
+    <form class="access-lock-card" id="teamVacForm" autocomplete="off">
+      <p class="eyebrow">P.O.N. OS</p>
+      <h1>Код доступа</h1>
+      <label class="code-label" for="teamVacCode">Введите код</label>
+      <div class="code-row">
+        <input id="teamVacCode" name="code" type="password" spellcheck="false" autocomplete="off" aria-describedby="teamVacError">
+        <button type="submit">OK</button>
+      </div>
+      <p class="code-error" id="teamVacError" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <main class="desktop">
+    <section class="access-banner" aria-live="polite">
+      <div>
+        <p class="eyebrow">порядок чтения</p>
+        <h1>Сначала прочитайте «Начало P.O.N.»</h1>
+        <p id="accessMessage">Чтобы открыть вижен-документ и получить доступ к референсам, сначала прочитайте весь раздел «Начало P.O.N.»: переписку Devci и Mars. После этого остальные папки разблокируются.</p>
+      </div>
+      <div class="access-chip" id="accessChip">этап 01</div>
+    </section>
+
+    <section class="folder-grid" aria-label="Папки проекта">
+      <button class="os-folder" type="button" data-doc="pon-origin" data-requires-origin="false">
+        <span class="folder-art" aria-hidden="true"></span>
+        <span class="folder-step">01</span>
+        <strong>Начало P.O.N.</strong>
+        <small>переписка Devci/Mars</small>
+        <span class="lock-badge" aria-hidden="true">закрыто</span>
+      </button>
+      <button class="os-folder" type="button" data-doc="pon-vision" data-requires-origin="true">
+        <span class="folder-art" aria-hidden="true"></span>
+        <span class="folder-step">02</span>
+        <strong>Вижен P.O.N.</strong>
+        <small>главный документ</small>
+        <span class="lock-badge" aria-hidden="true">закрыто</span>
+      </button>
+      <button class="os-folder" type="button" data-doc="pon-steam-page-lab" data-requires-origin="true">
+        <span class="folder-art" aria-hidden="true"></span>
+        <span class="folder-step">03</span>
+        <strong>Описания P.O.N.</strong>
+        <small>10 вариантов текста</small>
+        <span class="lock-badge" aria-hidden="true">закрыто</span>
+      </button>
+      <button class="os-folder" type="button" data-doc="pon-image-database" data-requires-origin="true">
+        <span class="folder-art" aria-hidden="true"></span>
+        <span class="folder-step">04</span>
+        <strong>База P.O.N.</strong>
+        <small>скриншоты по месяцам</small>
+        <span class="lock-badge" aria-hidden="true">закрыто</span>
+      </button>
+    </section>
+
+    <p class="notice" id="notice" role="status"></p>
+
+    <section class="doc-window" id="docWindow" aria-label="Окно документа" hidden>
+      <header class="window-bar">
+        <div class="window-controls" aria-hidden="true">
+          <span class="red"></span>
+          <span class="yellow"></span>
+          <span class="green"></span>
+        </div>
+        <div class="window-title">
+          <p id="docEyebrow" class="eyebrow"></p>
+          <h2 id="docTitle"></h2>
+          <p id="docSummary"></p>
+        </div>
+        <div class="window-actions">
+          <a id="openPdf" class="icon-button" href="#" target="_blank" rel="noreferrer" title="Открыть документ отдельно">ОТКРЫТЬ</a>
+          <a id="openSource" class="icon-button" href="#" target="_blank" rel="noreferrer" title="Открыть исходник" hidden>ИСХ</a>
+          <button id="closeWindow" class="icon-button close-button" type="button" title="Закрыть окно">×</button>
+        </div>
+      </header>
+
+      <div class="read-gate" id="readGate" hidden>
+        <div>
+          <strong id="readGateTitle">Прочитайте раздел до конца</strong>
+          <span id="readGateText">Прогресс считается по прокрутке внутри окна.</span>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span id="readProgress"></span></div>
+        <button id="markRead" type="button" disabled>доскролльте до конца</button>
+      </div>
+
+      <iframe id="pdfFrame" title="Просмотр P.O.N. документа"></iframe>
+    </section>
+  </main>
+
+  <script>
+    window.DOCS = [{"id":"pon-origin","title":"Начало P.O.N.: переписка Devci и Mars","eyebrow":"PON / история создания","summary":"Хронологический плеер первого обсуждения P.O.N.: скриншоты Telegram, 18 голосовых, исходное видео, выводы для вижен-документа.","view":"origin/index.html","primary":"origin/index.html","primaryLabel":"ОТКРЫТЬ"},{"id":"pon-vision","title":"P.O.N. Основной vision-документ","eyebrow":"PON / главное видение","summary":"Основной рабочий vision-документ P.O.N.: обработанный T1-поток встроен в проектную структуру, а не вынесен отдельной заметкой.","view":"print/pon-vision-print.html","primary":"pdf/PON_VISION_DOC.pdf","primaryLabel":"PDF"},{"id":"pon-steam-page-lab","title":"P.O.N. Варианты описания","eyebrow":"PON / текст страницы Steam","summary":"Рабочая локальная страница P.O.N. для быстрой примерки короткого описания, основного текста и блоков с видео.","view":"steam-page-lab/index.html?v=20260526-2155","primary":"pdf/PON_STEAM_COPY_VARIANTS.pdf","primaryLabel":"PDF"},{"id":"pon-image-database","title":"P.O.N. База скриншотов","eyebrow":"PON / визуальный архив","summary":"Структурированная база скриншотов P.O.N.: категории, подкатегории и визуальные разделы.","view":"database/index.html","primary":"database/index.html","primaryLabel":"БАЗА"}];
+  </script>
+  <script src="site.js"></script>
+</body>
+</html>

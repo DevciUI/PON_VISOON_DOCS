@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    if (window.top === window && sessionStorage.getItem("pon-teamvac-access-v1") !== "1") {
+      window.location.replace("../index.html");
+    }
+  </script>
+  <title>Начало P.O.N. · переписка Devci/Mars</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050505;
+      --panel: #101010;
+      --panel-2: #171717;
+      --line: #2b2b2b;
+      --text: #f5f5f5;
+      --muted: #a9a9a9;
+      --red: #d1001f;
+      --blue: #2f628d;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    a { color: #ff4057; text-decoration: none; }
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+      gap: 34px;
+      align-items: end;
+      padding: 42px clamp(18px, 4vw, 56px);
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(5,5,5,.98) 0 45%, rgba(5,5,5,.72)),
+        radial-gradient(circle at 82% 18%, rgba(209,0,31,.18), transparent 28%),
+        #050505;
+    }
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 860px;
+      margin: 0;
+      font-size: clamp(42px, 7vw, 92px);
+      line-height: .94;
+      letter-spacing: 0;
+    }
+    .hero-lead {
+      max-width: 760px;
+      margin: 22px 0 0;
+      color: #d7d7d7;
+      font-size: clamp(17px, 2vw, 23px);
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+      max-width: 760px;
+    }
+    .fact {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .fact strong { display: block; font-size: 20px; }
+    .fact span { color: var(--muted); font-size: 13px; }
+    .phone {
+      max-height: 78vh;
+      overflow: hidden;
+      border: 1px solid #303030;
+      border-radius: 8px;
+      background: #0d1722;
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+    }
+    .phone img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px clamp(14px, 3vw, 34px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(5,5,5,.92);
+      backdrop-filter: blur(14px);
+    }
+    .sticky-nav button {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111;
+      color: var(--text);
+      padding: 9px 11px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .sticky-nav button.active { border-color: var(--red); background: rgba(209,0,31,.18); }
+    .sticky-nav span { display: block; color: var(--red); font-size: 11px; font-weight: 800; }
+    .section {
+      padding: 42px clamp(18px, 4vw, 56px);
+      border-bottom: 1px solid var(--line);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .note h3 { margin: 0 0 8px; font-size: 18px; }
+    .note p, .note li { color: #d2d2d2; }
+    .episode {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(380px, 1.08fr);
+      gap: 24px;
+      padding: 44px clamp(18px, 4vw, 56px);
+      border-bottom: 1px solid var(--line);
+    }
+    .episode-copy {
+      position: sticky;
+      top: 72px;
+      align-self: start;
+    }
+    .timecode {
+      margin: 0 0 8px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3.5vw, 48px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    .summary {
+      color: #e2e2e2;
+      font-size: 18px;
+    }
+    ul { margin: 16px 0 18px; padding-left: 20px; color: #d5d5d5; }
+    li { margin-bottom: 7px; }
+    .chat-strip {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .bubble {
+      max-width: 86%;
+      border-radius: 8px;
+      padding: 9px 11px;
+      background: #182433;
+    }
+    .bubble.right {
+      justify-self: end;
+      background: #245982;
+    }
+    .bubble b { margin-right: 8px; color: #fff; }
+    .bubble span { color: #b8d5ef; font-size: 12px; }
+    .bubble p { margin: 5px 0 0; color: #fff; }
+    .media-stack {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0b0b0b;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    figcaption {
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+    }
+    video {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #000;
+    }
+    .audio-grid {
+      display: grid;
+      gap: 9px;
+      margin-top: 18px;
+    }
+    .audio-card {
+      border: 1px solid #2d3743;
+      border-radius: 8px;
+      background: #101820;
+      padding: 10px;
+    }
+    .audio-card.right {
+      border-color: rgba(47,98,141,.85);
+      background: #112235;
+    }
+    .audio-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+      color: #fff;
+    }
+    .audio-head span { color: var(--muted); }
+    audio { width: 100%; height: 34px; }
+    .audio-card p { margin: 8px 0 0; color: #d8d8d8; }
+    .evidence {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .evidence th, .evidence td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .evidence th { color: var(--red); }
+    @media (max-width: 980px) {
+      .hero, .episode { grid-template-columns: 1fr; min-height: auto; }
+      .phone { max-height: none; }
+      .episode-copy { position: static; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="kicker">P.O.N. / история создания / внутренняя страница доказательств</p>
+      <h1>Начало P.O.N.: переписка Devci и Mars</h1>
+      <p class="hero-lead">Эта страница собирает первые сообщения, войсы и скриншоты в один хронологический плеер. Слева в Telegram — Mars, справа — Devci. Все выводы ниже являются внутренним производственным контекстом: публично бэтмен-подобный референс не называть.</p>
+      <div class="facts">
+        <div class="fact"><strong>8</strong><span>скриншотов переписки</span></div>
+        <div class="fact"><strong>18</strong><span>голосовых сообщений</span></div>
+        <div class="fact"><strong>1</strong><span>исходное видео</span></div>
+        <div class="fact"><strong>16:51-17:07</strong><span>первый цельный проход идеи</span></div>
+      </div>
+    </div>
+    <div class="phone">
+      <img src="media/screen_06.png" alt="Переписка Devci и Mars, момент фиксации идеи">
+    </div>
+  </header>
+  <nav class="sticky-nav" aria-label="Хронология начала P.O.N."><button type="button" data-target="spark"><span>16:51-16:52</span>Искра: хоррор про Бэтмена глазами жертвы</button>
+<button type="button" data-target="first-pitch"><span>16:55-16:57</span>Первый питч: TikTok-видео от первого лица</button>
+<button type="button" data-target="risk-filter"><span>16:58-16:59</span>Фильтр риска: не terror fantasy, а heist crew fantasy</button>
+<button type="button" data-target="validation"><span>17:00-17:01</span>Проверка рынком: сначала постановочный геймплей, потом Steam</button>
+<button type="button" data-target="core"><span>17:03</span>Фиксация ядра: Nightmare как режиссер давления</button>
+<button type="button" data-target="loop"><span>17:04-17:06</span>Игровой цикл: цель выполнить, Nightmare пережить</button>
+<button type="button" data-target="progression"><span>17:06-17:07</span>Финальный штрих: очки, стафф, ловушки</button></nav>
+  <section class="section">
+    <p class="kicker">Сжатый вывод для Vision Doc</p>
+    <div class="grid-3">
+      <article class="note">
+        <h3>ФИКСИРОВАТЬ</h3>
+        <p>Ядро P.O.N. — кооп-ограбление/грязная миссия, где команда не охотится, а сама становится добычей для почти неубиваемой тени.</p>
+      </article>
+      <article class="note">
+        <h3>НЕ ПУБЛИКОВАТЬ</h3>
+        <p>Batman, прямая террористическая фантазия, заложники и минирование как маркетинговый центр. Это внутренний сырой слой, а не публичный текст.</p>
+      </article>
+      <article class="note">
+        <h3>РАЗВИВАТЬ</h3>
+        <p>Постановочный геймплей / вирусный трейлер как быстрая проверка, игровой цикл как Lethal Company/Phasmophobia, но с давлением ограбления и Nightmare как режиссером угрозы.</p>
+      </article>
+    </div>
+  </section>
+  
+    <section class="episode" id="spark" data-title="Искра: хоррор про Бэтмена глазами жертвы" data-time="16:51-16:52" data-label="завязка">
+      <div class="episode-copy">
+        <p class="timecode">16:51-16:52 · завязка</p>
+        <h2>Искра: хоррор про Бэтмена глазами жертвы</h2>
+        <p class="summary">Devci отправляет видео и сразу сжимает мысль до формулы: бэтмен-подобный хоррор не от лица героя, а от лица того, на кого он охотится.</p>
+        <ul><li>Внутренний референс: Бэтмен как хоррор.</li>
+<li>Точка зрения меняется с супергероя на испуганную цель.</li>
+<li>Mars находится слева в переписке, Devci справа.</li></ul>
+        <div class="chat-strip"><div class="bubble left"><b>Mars</b><span>16:51</span><p>Это че за хоррор</p></div>
+<div class="bubble right"><b>Devci</b><span>16:51</span><p>бетмен</p></div>
+<div class="bubble right"><b>Devci</b><span>16:51</span><p>от лица тера</p></div>
+<div class="bubble left"><b>Mars</b><span>16:52</span><p>Я сделал хоррор игру про бетмена за 7 лет</p></div></div>
+        <div class="audio-grid"></div>
+      </div>
+      <div class="media-stack"><video controls preload="metadata" src="media/video_01.mp4"></video><figure><img src="media/screen_01.png" alt="Искра: хоррор про Бэтмена глазами жертвы: Снимок экрана 2026-05-25 182257.png"><figcaption>Снимок экрана 2026-05-25 182257.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="first-pitch" data-title="Первый питч: TikTok-видео от первого лица" data-time="16:55-16:57" data-label="первый формат">
+      <div class="episode-copy">
+        <p class="timecode">16:55-16:57 · первый формат</p>
+        <h2>Первый питч: TikTok-видео от первого лица</h2>
+        <p class="summary">Появляется конкретная постановка короткого ролика: игрок видит напарника, сверху падает тень, камера резко дергается, остается кровь. Смысл — мгновенно продать ощущение угрозы.</p>
+        <ul><li>Сначала не полноценная игра, а короткая вирусная проверка идеи.</li>
+<li>Ключевой кадр: внезапное исчезновение напарника.</li>
+<li>Прямой terror framing сразу помечен как опасный; безопаснее говорить про crew/воришек/грабителей.</li></ul>
+        <div class="chat-strip"><div class="bubble right"><b>Devci</b><span>16:55</span><p>Можно запустить видос в TikTok от первого лица в коопе: ты идешь, я такой иду с пушкой, ты показываешь, я поворачиваюсь — сверху падает Batman-like тень и утаскивает.</p></div>
+<div class="bubble right"><b>Devci</b><span>16:56</span><p>атмосферно сделать</p></div>
+<div class="bubble right"><b>Devci</b><span>16:56</span><p>там буквально 10 секунд видос</p></div>
+<div class="bubble right"><b>Devci</b><span>16:57</span><p>ты представь что не ты охотишься, а на тебя</p></div></div>
+        <div class="audio-grid">
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:56</span></div>
+        <audio controls preload="metadata" src="media/audio_01.ogg"></audio>
+        <p>Короткий уточняющий войс по отправленному видео: это найденный референс или уже собранный/скопированный кусок.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:56</span></div>
+        <audio controls preload="metadata" src="media/audio_02.ogg"></audio>
+        <p>Mars ловит общий инфополе-момент: похожая тема уже крутилась в голове после просмотра кино и референсов.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:57</span></div>
+        <audio controls preload="metadata" src="media/audio_03.ogg"></audio>
+        <p>Сырой фрагмент размышления про насилие, перевозку/рейд и атмосферу угрозы; распознавание неточное.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:57</span></div>
+        <audio controls preload="metadata" src="media/audio_04.ogg"></audio>
+        <p>Идея смены стороны: не играть за «добрых», а смотреть на ситуацию глазами антагонистов. Прямой терроризм сразу отмечен как слишком жесткий и рискованный; грабители безопаснее как рамка.</p>
+      </article></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_02.png" alt="Первый питч: TikTok-видео от первого лица: Снимок экрана 2026-05-25 182327.png"><figcaption>Снимок экрана 2026-05-25 182327.png</figcaption></figure>
+<figure><img src="media/screen_03.png" alt="Первый питч: TikTok-видео от первого лица: Снимок экрана 2026-05-25 182410.png"><figcaption>Снимок экрана 2026-05-25 182410.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="risk-filter" data-title="Фильтр риска: не terror fantasy, а heist crew fantasy" data-time="16:58-16:59" data-label="отсечение лишнего">
+      <div class="episode-copy">
+        <p class="timecode">16:58-16:59 · отсечение лишнего</p>
+        <h2>Фильтр риска: не terror fantasy, а heist crew fantasy</h2>
+        <p class="summary">Команда находит границу: «антагонисты» как мысль работает, но прямой терроризм, заложники и минирование нельзя ставить в публичный центр P.O.N.</p>
+        <ul><li>Публичный слой: преступная команда / ограбление / грязная работа.</li>
+<li>Запретный слой: реалистичный терроризм как маркетинговая зацепка.</li>
+<li>Хоррор должен идти от неуязвимой тени, а не от смакования преступлений.</li></ul>
+        <div class="chat-strip"><div class="bubble right"><b>Devci</b><span>16:59</span><p>ебать имба была бы</p></div>
+<div class="bubble right"><b>Devci</b><span>16:59</span><p>типо симулятор терров</p></div>
+<div class="bubble right"><b>Devci</b><span>16:59</span><p>есть такая уже / prototype</p></div></div>
+        <div class="audio-grid">
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:58</span></div>
+        <audio controls preload="metadata" src="media/audio_05.ogg"></audio>
+        <p>Формула «Ready or Not, но от лица противоположной стороны»: не спецназ, а люди внутри операции.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:58</span></div>
+        <audio controls preload="metadata" src="media/audio_06.ogg"></audio>
+        <p>Перечень тем, которые всплывают в сырой версии: заложники, бомбы, минирование, захват. Это нужно держать как внутренний черновик, не как публичное позиционирование.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:58</span></div>
+        <audio controls preload="metadata" src="media/audio_07.ogg"></audio>
+        <p>Mars сам отсекает прямой terror angle: плохо для цензуры, легко забанить, тема слишком токсичная.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:58</span></div>
+        <audio controls preload="metadata" src="media/audio_08.ogg"></audio>
+        <p>Уточнение: если делать подобный fantasy, его надо уводить в более стилизованную, менее реалистичную сторону.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>16:59</span></div>
+        <audio controls preload="metadata" src="media/audio_09.ogg"></audio>
+        <p>Проверка крайних вариантов: играть за убийцу, монстра или разрушителя. Вывод: это не тот безопасный и чистый framing, который нужен P.O.N.</p>
+      </article></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_04.png" alt="Фильтр риска: не terror fantasy, а heist crew fantasy: Снимок экрана 2026-05-25 182844.png"><figcaption>Снимок экрана 2026-05-25 182844.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="validation" data-title="Проверка рынком: сначала постановочный геймплей, потом Steam" data-time="17:00-17:01" data-label="валидация">
+      <div class="episode-copy">
+        <p class="timecode">17:00-17:01 · валидация</p>
+        <h2>Проверка рынком: сначала постановочный геймплей, потом Steam</h2>
+        <p class="summary">Mars предлагает не тонуть в прототипе, а сначала собрать фейковый трейлер или постановочный геймплей, который выглядит как сильная игра и проверяет реакцию.</p>
+        <ul><li>Метод разработки идеи: сначала выразительный ролик, потом решение о глубине прототипа.</li>
+<li>Steam и вишлисты появляются как естественный следующий шаг после проверки фантазии.</li>
+<li>Это объясняет, почему P.O.N. родился через вирусный визуальный момент.</li></ul>
+        <div class="chat-strip"><div class="bubble left"><b>Mars</b><span>17:00</span><p>мясо там лютое</p></div>
+<div class="bubble right"><b>Devci</b><span>17:00</span><p>ну)</p></div>
+<div class="bubble right"><b>Devci</b><span>17:00</span><p>давай я попробую</p></div>
+<div class="bubble right"><b>Devci</b><span>17:01</span><p>и зальем в стим</p></div>
+<div class="bubble left"><b>Mars</b><span>17:01</span><p>100 тыс вишлистов за неделю</p></div>
+<div class="bubble right"><b>Devci</b><span>17:01</span><p>я даже идею придумал</p></div></div>
+        <div class="audio-grid">
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:00</span></div>
+        <audio controls preload="metadata" src="media/audio_10.ogg"></audio>
+        <p>Mars предлагает сначала не прототип, а fake trailer: быстро визуализировать ощущение и проверить реакцию.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:00</span></div>
+        <audio controls preload="metadata" src="media/audio_11.ogg"></audio>
+        <p>Рабочий метод для любой новой игры: fake gameplay, fake screenshots, trailer-like proof вместо долгого прототипа вслепую.</p>
+      </article></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_05.png" alt="Проверка рынком: сначала постановочный геймплей, потом Steam: Снимок экрана 2026-05-25 183350.png"><figcaption>Снимок экрана 2026-05-25 183350.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="core" data-title="Фиксация ядра: Nightmare как режиссер давления" data-time="17:03" data-label="ядро">
+      <div class="episode-copy">
+        <p class="timecode">17:03 · ядро</p>
+        <h2>Фиксация ядра: Nightmare как режиссер давления</h2>
+        <p class="summary">Здесь появляется главный каркас: игроки — не герои, а crew внутри темного объекта; преследователь работает как режиссер ужаса, который давит, отнимает людей и превращает кооп в панику.</p>
+        <ul><li>Nightmare не просто враг, а режиссер давления.</li>
+<li>Игроки понимают образ, но публичный текст не называет Batman.</li>
+<li>Кооп важен, потому что страх работает через исчезновение напарника рядом.</li></ul>
+        <div class="chat-strip"><div class="bubble left"><b>Mars</b><span>17:01</span><p>Или ты про бетмена / или новую идею придумал</p></div>
+<div class="bubble right"><b>Devci</b><span>17:03</span><p>а мы там взорвать чейнибудь / типо как фазма / ток про взрывы, убийства, а не про поиск монстров</p></div></div>
+        <div class="audio-grid">
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:03</span></div>
+        <audio controls preload="metadata" src="media/audio_12.ogg"></audio>
+        <p>Ключевой вопрос Mars: если игроки — бандиты, а бэтмен-подобная фигура работает как режиссер давления, какая цель игры и что игроки должны делать.</p>
+      </article>
+
+      <article class="audio-card right">
+        <div class="audio-head"><strong>Devci</strong><span>17:03</span></div>
+        <audio controls preload="metadata" src="media/audio_13.ogg"></audio>
+        <p>Devci формулирует ядро: кооп в темноте, игроки как преступники/воришки, эхом слышно помещение, внезапная тень утаскивает напарника, появляется ведро крови. Для игроков преследователь не герой, а монстр/демон. Публично Batman не упоминается, но внутренний референс понятен.</p>
+      </article></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_06.png" alt="Фиксация ядра: Nightmare как режиссер давления: Снимок экрана 2026-05-25 183430.png"><figcaption>Снимок экрана 2026-05-25 183430.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="loop" data-title="Игровой цикл: цель выполнить, Nightmare пережить" data-time="17:04-17:06" data-label="loop">
+      <div class="episode-copy">
+        <p class="timecode">17:04-17:06 · loop</p>
+        <h2>Игровой цикл: цель выполнить, Nightmare пережить</h2>
+        <p class="summary">Mars требует понятную цель игры. Devci переводит вайб в loop: команда входит, выполняет задачу, может отпугивать Nightmare, но не убивает его. Победа — миссия плюс выход живыми.</p>
+        <ul><li>Nightmare бессмертен в рамках матча.</li>
+<li>Оружие и инструменты дают отсрочку, а не победу над угрозой.</li>
+<li>Референс структуры: Lethal Company / Phasmophobia, но с давлением ограбления и супергеройским хоррором.</li></ul>
+        <div class="chat-strip"><div class="bubble left"><b>Mars</b><span>17:06</span><p>Короче он бессмертен, а мы взрываем бомбу или миссию и уебываем. Выжить.</p></div></div>
+        <div class="audio-grid">
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:04</span></div>
+        <audio controls preload="metadata" src="media/audio_14.ogg"></audio>
+        <p>Mars просит описать это уже от геймплея, а не только от вайба.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:04</span></div>
+        <audio controls preload="metadata" src="media/audio_15.ogg"></audio>
+        <p>Mars уточняет цель: захват здания, бомба или другой objective; по сути вопрос о win condition.</p>
+      </article>
+
+      <article class="audio-card right">
+        <div class="audio-head"><strong>Devci</strong><span>17:05</span></div>
+        <audio controls preload="metadata" src="media/audio_16.ogg"></audio>
+        <p>Devci раскладывает mission loop: команда входит в здание, заранее смотрит план, должна что-то установить, взломать, украсть, ограбить банк или выполнить грязную работу. Nightmare мешает все время; оружием его можно только спугнуть, а не победить.</p>
+      </article>
+
+      <article class="audio-card left">
+        <div class="audio-head"><strong>Mars</strong><span>17:05</span></div>
+        <audio controls preload="metadata" src="media/audio_17.ogg"></audio>
+        <p>Mars добивает вопрос цели: нужно ли убить преследователя, взорвать здание, выполнить миссию или просто выжить.</p>
+      </article>
+
+      <article class="audio-card right">
+        <div class="audio-head"><strong>Devci</strong><span>17:06</span></div>
+        <audio controls preload="metadata" src="media/audio_18.ogg"></audio>
+        <p>Devci фиксирует правильную структуру: как в Lethal Company/Phasmophobia, монстра нельзя убить; нужно выполнить миссию и выбраться. В конце — очки/результат, прогрессия и покупка стаффа.</p>
+      </article></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_07.png" alt="Игровой цикл: цель выполнить, Nightmare пережить: Снимок экрана 2026-05-25 183500.png"><figcaption>Снимок экрана 2026-05-25 183500.png</figcaption></figure></div>
+    </section>
+
+    <section class="episode" id="progression" data-title="Финальный штрих: очки, стафф, ловушки" data-time="17:06-17:07" data-label="прогрессия">
+      <div class="episode-copy">
+        <p class="timecode">17:06-17:07 · прогрессия</p>
+        <h2>Финальный штрих: очки, стафф, ловушки</h2>
+        <p class="summary">После loop появляется мета-структура: игроки отбиваются, прячутся, получают очки за выполненное и могут покупать стафф/ловушки для следующих заходов.</p>
+        <ul><li>Конец миссии должен давать понятную оценку результата.</li>
+<li>Стафф и ловушки нужны не для power fantasy, а для подготовки к следующему страху.</li>
+<li>Mars формулирует реакцию: это нормально необычный новый experience.</li></ul>
+        <div class="chat-strip"><div class="bubble left"><b>Mars</b><span>17:07</span><p>мы просто отбиваемся / прячемся</p></div>
+<div class="bubble right"><b>Devci</b><span>17:07</span><p>в конце очки, за них разный стафф покупать</p></div>
+<div class="bubble right"><b>Devci</b><span>17:07</span><p>ловушки там для него</p></div>
+<div class="bubble left"><b>Mars</b><span>17:07</span><p>нормально необычно так / Новый экспириенс</p></div></div>
+        <div class="audio-grid"></div>
+      </div>
+      <div class="media-stack"><figure><img src="media/screen_08.png" alt="Финальный штрих: очки, стафф, ловушки: Снимок экрана 2026-05-25 183537.png"><figcaption>Снимок экрана 2026-05-25 183537.png</figcaption></figure></div>
+    </section>
+  <section class="section">
+    <p class="kicker">Доказательная карта</p>
+    <h2>Все файлы источника в порядке времени</h2>
+    <table class="evidence">
+      <thead><tr><th>Дата/время из файла</th><th>Тип</th><th>Оригинальное имя</th><th>Копия на сайте</th></tr></thead>
+      <tbody><tr><td>2026-05-25T18:22:33</td><td>.mp4</td><td>IMG_8073.MP4</td><td><a href="media/video_01.mp4" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:22:57</td><td>.png</td><td>Снимок экрана 2026-05-25 182257.png</td><td><a href="media/screen_01.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:23:27</td><td>.png</td><td>Снимок экрана 2026-05-25 182327.png</td><td><a href="media/screen_02.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:24:10</td><td>.png</td><td>Снимок экрана 2026-05-25 182410.png</td><td><a href="media/screen_03.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:26:50</td><td>.ogg</td><td>audio_2026-05-25_18-26-50.ogg</td><td><a href="media/audio_01.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:26:53</td><td>.ogg</td><td>audio_2026-05-25_18-26-53.ogg</td><td><a href="media/audio_02.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:26:56</td><td>.ogg</td><td>audio_2026-05-25_18-26-56.ogg</td><td><a href="media/audio_03.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:26:58</td><td>.ogg</td><td>audio_2026-05-25_18-26-58.ogg</td><td><a href="media/audio_04.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:28:44</td><td>.png</td><td>Снимок экрана 2026-05-25 182844.png</td><td><a href="media/screen_04.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:29:15</td><td>.ogg</td><td>audio_2026-05-25_18-29-15.ogg</td><td><a href="media/audio_05.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:29:19</td><td>.ogg</td><td>audio_2026-05-25_18-29-19.ogg</td><td><a href="media/audio_06.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:29:22</td><td>.ogg</td><td>audio_2026-05-25_18-29-22.ogg</td><td><a href="media/audio_07.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:29:26</td><td>.ogg</td><td>audio_2026-05-25_18-29-26.ogg</td><td><a href="media/audio_08.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:29:29</td><td>.ogg</td><td>audio_2026-05-25_18-29-29.ogg</td><td><a href="media/audio_09.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:33:50</td><td>.png</td><td>Снимок экрана 2026-05-25 183350.png</td><td><a href="media/screen_05.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:34:13</td><td>.ogg</td><td>audio_2026-05-25_18-34-13.ogg</td><td><a href="media/audio_10.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:34:16</td><td>.ogg</td><td>audio_2026-05-25_18-34-16.ogg</td><td><a href="media/audio_11.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:34:30</td><td>.png</td><td>Снимок экрана 2026-05-25 183430.png</td><td><a href="media/screen_06.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:34:42</td><td>.ogg</td><td>audio_2026-05-25_18-34-42.ogg</td><td><a href="media/audio_12.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:34:44</td><td>.ogg</td><td>audio_2026-05-25_18-34-44.ogg</td><td><a href="media/audio_13.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:00</td><td>.png</td><td>Снимок экрана 2026-05-25 183500.png</td><td><a href="media/screen_07.png" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:16</td><td>.ogg</td><td>audio_2026-05-25_18-35-16.ogg</td><td><a href="media/audio_14.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:19</td><td>.ogg</td><td>audio_2026-05-25_18-35-19.ogg</td><td><a href="media/audio_15.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:21</td><td>.ogg</td><td>audio_2026-05-25_18-35-21.ogg</td><td><a href="media/audio_16.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:24</td><td>.ogg</td><td>audio_2026-05-25_18-35-24.ogg</td><td><a href="media/audio_17.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:27</td><td>.ogg</td><td>audio_2026-05-25_18-35-27.ogg</td><td><a href="media/audio_18.ogg" target="_blank">открыть</a></td></tr>
+<tr><td>2026-05-25T18:35:37</td><td>.png</td><td>Снимок экрана 2026-05-25 183537.png</td><td><a href="media/screen_08.png" target="_blank">открыть</a></td></tr></tbody>
+    </table>
+  </section>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('.sticky-nav button'));
+    const episodes = Array.from(document.querySelectorAll('.episode'));
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => document.getElementById(button.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    });
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      buttons.forEach((button) => button.classList.toggle('active', button.dataset.target === visible.target.id));
+    }, { threshold: [0.22, 0.45, 0.7] });
+    episodes.forEach((episode) => observer.observe(episode));
+    if (buttons[0]) buttons[0].classList.add('active');
+    function reportReadProgress() {
+      const scroller = document.scrollingElement || document.documentElement || document.body;
+      const max = Math.max(1, scroller.scrollHeight - window.innerHeight);
+      const percent = Math.min(100, (window.scrollY / max) * 100);
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'pon-origin-progress', percent }, '*');
+        if (percent >= 96) {
+          window.parent.postMessage({ type: 'pon-origin-complete' }, '*');
+        }
+      }
+    }
+    window.addEventListener('scroll', reportReadProgress, { passive: true });
+    window.addEventListener('load', reportReadProgress);
+    setTimeout(reportReadProgress, 250);
+  </script>
+</body>
+</html>

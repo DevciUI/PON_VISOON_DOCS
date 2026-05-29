@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1917 900" role="img" aria-label="P.O.N. placeholder image">
+  <rect width="1917" height="900" fill="#000"/>
+  <g fill="none" stroke="#e8e8e8" stroke-width="2">
+    <rect x="800" y="400" width="318" height="68"/>
+    <path d="M800 400l318 68M1118 400L800 468"/>
+  </g>
+</svg>

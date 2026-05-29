@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    if (window.top === window && sessionStorage.getItem("pon-teamvac-access-v1") !== "1") {
+      window.location.replace("../index.html");
+    }
+  </script>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>P.O.N. Варианты описания</title>
+  <link rel="stylesheet" href="styles.css?v=20260526-2155">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <span class="system-label">P.O.N. / ОПИСАНИЯ</span>
+      <strong>PDF-документ с вариантами текста</strong>
+    </div>
+    <a class="pdf-link" href="../pdf/PON_STEAM_COPY_VARIANTS.pdf" target="_blank" rel="noreferrer">PDF</a>
+  </header>
+
+  <main class="document switcher-document">
+    <aside class="variant-nav-panel">
+      <p class="eyebrow">store copy / variants</p>
+      <h1>P.O.N.</h1>
+      <p class="lead">Выбирай вариант слева. Справа открывается только один текст.</p>
+      <div id="variantNav" class="toc" aria-label="Оглавление вариантов"></div>
+    </aside>
+
+    <section id="variantsDocument" class="variants-document" aria-label="Варианты описания P.O.N.">
+      <p class="loading">Загрузка вариантов...</p>
+    </section>
+  </main>
+
+  <script src="app.js?v=20260526-2155"></script>
+</body>
+</html>

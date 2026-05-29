@@ -1,0 +1,279 @@
+:root {
+  color-scheme: dark;
+  --bg: #050505;
+  --panel: #101010;
+  --panel2: #171717;
+  --line: #292929;
+  --text: #f4f4f4;
+  --muted: #a5a5a5;
+  --red: #d1001f;
+  --red-soft: rgba(209, 0, 31, .18);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.db-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid var(--line);
+  background: #090909;
+  padding: 16px;
+  overflow: auto;
+}
+
+.nav-brand {
+  display: grid;
+  gap: 5px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-brand strong {
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+
+.nav-brand span,
+.kicker,
+.stats,
+.category-head span,
+.subhead span,
+figcaption span {
+  color: var(--muted);
+}
+
+#search {
+  width: 100%;
+  margin: 14px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 11px 12px;
+  outline: none;
+}
+
+#search:focus {
+  border-color: var(--red);
+}
+
+.db-nav nav {
+  display: grid;
+  gap: 6px;
+}
+
+.db-nav a {
+  min-height: 42px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 9px 10px;
+  text-decoration: none;
+}
+
+.db-nav a:hover {
+  border-color: #666;
+}
+
+.db-nav a span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
+}
+
+.db-nav b {
+  color: var(--red);
+  font-size: 12px;
+}
+
+main {
+  min-width: 0;
+}
+
+.hero {
+  min-height: 190px;
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 28px clamp(18px, 3vw, 42px);
+  background: #111;
+}
+
+.kicker {
+  margin: 0;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: clamp(34px, 5vw, 72px);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stats span {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel2);
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.category-section {
+  border-bottom: 1px solid var(--line);
+  padding: 26px clamp(14px, 2.4vw, 34px) 34px;
+}
+
+.category-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.category-head h2 {
+  margin-top: 5px;
+  font-size: clamp(24px, 3vw, 42px);
+}
+
+.subcategory {
+  margin-top: 22px;
+}
+
+.subhead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-bottom: 14px;
+}
+
+.subhead h3 {
+  font-size: 18px;
+}
+
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.month-divider {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(30px, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin: 8px 0 2px;
+}
+
+.month-divider span {
+  color: #fff;
+  background: var(--red-soft);
+  border: 1px solid rgba(209, 0, 31, .55);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.month-divider i {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(209, 0, 31, .75), rgba(255, 255, 255, .08));
+}
+
+.shot-card {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.shot-card[hidden] {
+  display: none;
+}
+
+.shot-card a {
+  display: block;
+  background: #050505;
+  aspect-ratio: 16 / 10;
+}
+
+.shot-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px 10px;
+  font-size: 12px;
+}
+
+figcaption strong {
+  color: #fff;
+  font-size: 12px;
+}
+
+figcaption span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+
+  .db-nav {
+    position: relative;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .db-nav nav {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
