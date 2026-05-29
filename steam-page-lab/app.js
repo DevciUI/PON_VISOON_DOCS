@@ -37,7 +37,7 @@ function renderFeatures(features) {
           <h4>${escapeHtml(feature.title)}</h4>
           <p>${escapeHtml(feature.body)}</p>
         </div>
-        ${renderVideo("заглушка")}
+        ${feature.media === false ? "" : renderVideo(feature.mediaLabel || feature.title || "заглушка")}
       </section>`
     )
     .join("");
@@ -55,11 +55,12 @@ function renderAfter(lines) {
 function renderVariant(variant, index) {
   const number = String(index + 1).padStart(2, "0");
   const author = variant.author || "by Devci";
+  const displayTitle = variant.label || `Вариант ${number}`;
   return `<article id="${escapeHtml(variant.id)}" class="page variant-page">
     <header class="variant-header">
       <div>
         <p class="eyebrow">описание P.O.N.</p>
-        <h2>Вариант ${number}</h2>
+        <h2>${escapeHtml(displayTitle)}</h2>
       </div>
       <span class="author">${escapeHtml(author)}</span>
     </header>
@@ -70,7 +71,7 @@ function renderVariant(variant, index) {
         <p class="short-copy">${escapeHtml(variant.short)}</p>
         <div class="tags">${renderTags(variant.tags)}</div>
       </div>
-      ${renderVideo()}
+      ${variant.heroMedia === false ? "" : renderVideo(variant.heroMediaLabel || "заглушка")}
     </section>
 
     <section class="body-grid">
@@ -99,7 +100,7 @@ function render(data) {
     .map(
       (variant, index) => `<button class="variant-tab" type="button" data-id="${escapeHtml(variant.id)}">
         <span>${String(index + 1).padStart(2, "0")}</span>
-        <strong>Вариант ${String(index + 1).padStart(2, "0")}</strong>
+        <strong>${escapeHtml(variant.label || `Вариант ${String(index + 1).padStart(2, "0")}`)}</strong>
         <em>${escapeHtml(variant.author || "by Devci")}</em>
       </button>`
     )
